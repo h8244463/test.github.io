@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP3 Player with A-B Repeat</title>
+</head>
+<body>
+
+<audio id="myAudio" controls>
+    <source src="https://funday.asia/en/mp3/mp3-8-1-23027.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
+<button onclick="setABRepeat()">A-B Repeat</button>
+
+<script>
+    var audio = document.getElementById("myAudio");
+    var isABRepeatEnabled = false;
+    var startPoint = 0;
+    var endPoint = 0;
+    
+    function setABRepeat() {
+        if (!isABRepeatEnabled) {
+            startPoint = audio.currentTime;
+            isABRepeatEnabled = true;
+        } else {
+            endPoint = audio.currentTime;
+            isABRepeatEnabled = false;
+            audio.currentTime = startPoint;
+        }
+    }
+
+    audio.addEventListener('timeupdate', function() {
+        if (isABRepeatEnabled && audio.currentTime >= endPoint) {
+            audio.currentTime = startPoint;
+        }
+    });
+</script>
+
+</body>
+</html>
